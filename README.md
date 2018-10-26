@@ -52,3 +52,5 @@ Rubric:
 
 ### Average CPU: 242.93293735
 ### Average GPU: 0.0439379
+
+## Speedup: 5529.00655
