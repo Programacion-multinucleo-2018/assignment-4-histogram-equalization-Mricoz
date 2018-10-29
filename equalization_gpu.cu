@@ -126,13 +126,13 @@ __global__ void normalize(int * histogram , int * histogram_temp, float totalSiz
 
     unsigned int index = threadIdx.x + threadIdx.y * blockDim.x;
 
+	float normal = 0.0;
     if (index < SIZE && blockIdx.x == 0 && blockIdx.y == 0){
-        for(int i = 0; i < index; i++){
-            histogram_temp[index] += histogram[i];
+        for(int i = 0; i <= index; i++){
+            normal += histogram[i];
         }
-        histogram_temp[index] = histogram_temp[index] * (PIXEL_SIZE / totalSize);
+        histogram_temp[index] = (int)floor(normal * (PIXEL_SIZE / (totalSize-1)));
     }
-    __syncthreads();
 }
 
 // Main
@@ -175,6 +175,9 @@ int main(int argc, char *argv[]) {
 	//Allow the windows to resize
 	namedWindow("Input", cv::WINDOW_NORMAL);
 	namedWindow("Output", cv::WINDOW_NORMAL);
+
+	cv::resizeWindow("Input", 800, 600);
+	cv::resizeWindow("Output", 800, 600);
 
 	//Show the input and output
 	imshow("Input", input_BW);
